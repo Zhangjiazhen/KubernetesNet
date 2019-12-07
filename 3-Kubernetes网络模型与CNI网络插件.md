@@ -12,6 +12,7 @@ ADD和DEL操作，是CNI插件唯一要实现的两个方法。意味着把容�
 ADD操作需要的参数包括容器里网卡的名字eth0、Pod的Network Namespace文件路径（/proc/<容器进程的PID>/ns/net）、容器ID等
 
 首先CNI bridge插件会在宿主机上检查CNI网桥是否存在，如果没有就创建。然后通过Infra容器的Network Namespace文件，进入到这个Network Namespace，然后创建一对Veth Pair设备。连接之后，CNI bridge插件还会为它设置Haripin Mode（发夹模式），这样就允许一个数据包从一个端口进来后，再从这个端口发出去（比如Pod里通过自己的Service访问到自己）。
+
 接下来，CNI bridge插件调用CNI ipam插件，从ipam.sbnet字段规定的网段里为容器分配一个可用的IP地址，然后CNI bridge插件就把这个IP地址添加在容器的eth0网卡上，同时为容器设置默认路由。
 
 最后，CNI bridge为CNI网桥添加IP地址。
