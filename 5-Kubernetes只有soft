@@ -1,0 +1,18 @@
+Kubernetes的网络方案对“隔离”的考虑。
+
+依靠NetworkPolicy这一专门的API对象来描述。
+
+CNI网络插件必须支持Kubernetes的NetworkPolicy才能产生作用，凡是支持的，都维护着一个NetworkPolicy Controller。
+
+Calico、Weave、kube-router等支持，Flannel还不支持（可以再额外安装一个插件来支持）。
+
+其实是靠在宿主机上生成对应的iptable来实现的。
+
+iptable只是一个操作Linux内核Netfilter子系统的“界面”。就是Linux内核里挡在网卡和用户态进程之间的一道防火墙。
+
+NetworkPolicy对象的描述能力要比基于Namespace的划分丰富得多。
+
+Kubernetes的定位，是IaaS与PaaS之间的中间层。
+
+
+

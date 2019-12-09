@@ -1,0 +1,12 @@
+全局的、为了代理不同后端Service而设置的负载均衡服务，就是Kubernetes里的Ingress服务。
+
+所谓Ingress，就是service的Service。其实就是Kubernetes项目对”反向代理”的一种抽象。
+
+一个Nginx Ingress Controller提供的服务，其实是一个可以根据Ingress对象和被代理后端Service的变化，来自动进行更新的Nginx负载均衡器。
+
+如果请求没有匹配到任何一条IngressRule，会返回一个404页面。
+
+Ingress只能工作在七层，而Service只能工作在四层。所以Kubernetes为应用配置TLS配置等HTTP相关操作时，都必须通过Ingress来 进行。
+
+将来Ingress的进化中，也会加入四层代理的能力。
+
